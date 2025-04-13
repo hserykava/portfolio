@@ -11,5 +11,9 @@ nav {
   display: flex;
 }
 nav a {
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  padding: 0.5em; 
   flex: 1;
 }
