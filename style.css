@@ -3,3 +3,10 @@ body {
   max-width: 100ch;
   margin-inline: auto;
 }
+nav ul,
+nav li {
+  display: contents;
+}
+nav {
+  display: flex;
+}
