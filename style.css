@@ -27,7 +27,7 @@ nav a.current {
   padding-bottom: 0.1em;
 }
 html {
-  --color-accent: oklch(87% 0.15 320);
+  --color-accent: oklch(88% 0.10 230);
   accent-color: var(--color-accent);
 }
 
