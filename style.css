@@ -76,3 +76,27 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
   text-wrap: balance;
 }
+body.resume h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-block: 1.5em;
+}
+
+body.resume section {
+  padding-block: 1.5em;
+  border-bottom: 1px solid oklch(87% 0.15 320);
+  margin-block: 1.5em;
+}
+
+body.resume h2 {
+  font-size: 1.4rem;
+  color: var(--color-accent);
+  border-left: 4px solid var(--color-accent);
+  padding-left: 0.5em;
+}
+
+body.resume article h3 {
+  margin-top: 1em;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
