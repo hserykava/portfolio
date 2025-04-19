@@ -1,9 +1,5 @@
 html {
   color-scheme: light dark;
-  --color-accent: oklch(87% 0.15 320);
-  --border-color: oklch(50% 10% 200 / 40%);
-  --hover-bg: color-mix(in oklch, var(--color-accent), canvas 85%);
-  accent-color: var(--color-accent);
 }
 body {
   font: 100%/1.5 system-ui;
