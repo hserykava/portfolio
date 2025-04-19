@@ -38,10 +38,10 @@ const BASE_PATH =
 for (let p of pages) {
   let url = p.url;
   let title = p.title;
-
   if (!url.startsWith('http')) {
     url = BASE_PATH + url;
   }
+
   let a = document.createElement('a');
   a.href = url;
   a.textContent = title;
@@ -51,6 +51,7 @@ for (let p of pages) {
   if (a.host !== location.host) {
     a.target = '_blank';
   }
+
   nav.append(a);
 }
 let select = document.querySelector('.color-scheme select');
