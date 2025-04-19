@@ -13,7 +13,7 @@ let pages = [
   { url: 'projects/', title: 'Projects' },
   { url: 'contact/', title: 'Contact' },
   { url: 'resume.html', title: 'Resume' },
-  { url: 'https://github.com/hseryakava', title: 'GitHub' }
+  { url: 'https://github.com/hserykava', title: 'GitHub' }
 ];
 let nav = document.createElement('nav');
 document.body.prepend(nav);
