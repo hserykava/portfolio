@@ -6,6 +6,13 @@ body {
   max-width: 100ch;
   margin-inline: auto;
 }
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+  font-family: inherit;
+}
 nav ul,
 nav li {
   display: contents;
