@@ -53,3 +53,9 @@ for (let p of pages) {
   }
   nav.append(a);
 }
+let select = document.querySelector('.color-scheme select');
+
+select.addEventListener('input', function (event) {
+  console.log('color scheme changed to', event.target.value);
+  document.documentElement.style.setProperty('color-scheme', event.target.value);
+});
