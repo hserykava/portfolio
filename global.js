@@ -40,5 +40,3 @@ for (let p of pages) {
   }
   nav.append(a);
 }
-
-}
