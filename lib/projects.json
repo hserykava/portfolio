@@ -1,4 +1,27 @@
-[
+[{
+    "title": "Project 1: Expository Visualization",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Placeholder description for Project 1: Expository Visualization."
+  },
+  {
+    "title": "Project 2: Persuasive/Deceptive Visualization",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Placeholder description for Project 2: Persuasive/Deceptive Visualization."
+  },
+  {
+    "title": "Project 3: Interactive Visualization",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Placeholder description for Project 3: Interactive Visualization."
+  },
+  {
+    "title": "Final Project",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Placeholder description for Final Project."
+  },
   {
     "title": "Lorem ipsum dolor sit.",
     "year": "2022",
@@ -70,29 +93,5 @@
     "year": "2024",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Cum non aperiam perferendis voluptatum laboriosam …tiae? Voluptatem est laborum sint eius accusamus."
-  },
-  {
-    "title": "Project 1: Expository Visualization",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Placeholder description for Project 1: Expository Visualization."
-  },
-  {
-    "title": "Project 2: Persuasive/Deceptive Visualization",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Placeholder description for Project 2: Persuasive/Deceptive Visualization."
-  },
-  {
-    "title": "Project 3: Interactive Visualization",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Placeholder description for Project 3: Interactive Visualization."
-  },
-  {
-    "title": "Final Project",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Placeholder description for Final Project."
   }
 ]
