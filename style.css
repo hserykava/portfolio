@@ -144,3 +144,8 @@ body.resume article h3 {
   margin: 0;
   color: #000;
 }
+#projects-pie-plot {
+  max-width: 20em;
+  margin-block: 2em;
+  overflow: visible;
+}
