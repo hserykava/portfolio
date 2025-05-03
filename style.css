@@ -200,11 +200,15 @@ svg {
   max-width: 400px;
   font-size: 1rem;
 }
-svg:has(path:hover) path:not(:hover) {
-  opacity: 0.5;
+.selected {
+  --color: oklch(60% 45% 0) !important;
 }
 
 path {
   transition: 300ms;
+  cursor: pointer;
 }
 
+svg:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
