@@ -74,7 +74,7 @@ renderProjects(projects, projectsContainer, 'h2');
 renderPieChart(projects);
 
 
-searchInput.addEventListener('change', (event) => {
+searchInput.addEventListener('input', (event) => {
   query = event.target.value;
   let filtered = filterProjects(query);
 
