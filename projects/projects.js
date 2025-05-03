@@ -33,3 +33,10 @@ arcs.forEach((arc, idx) => {
     .attr('d', arc)
     .attr('fill', colors(idx));
 });
+let legend = d3.select('.legend');
+data.forEach((d, idx) => {
+  legend.append('li')
+    .attr('style', `--color:${colors(idx)}`)  // applies the slice color
+    .attr('class', 'legend-item')            // optional: useful for styling each <li>
+    .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+});
