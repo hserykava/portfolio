@@ -40,23 +40,29 @@ function renderPieChart(projectsGiven) {
     .attr('fill', (_, i) => colors(i))
     .attr('class', (_, i) => i === selectedIndex ? 'selected' : '')
     .style('cursor', 'pointer')
-    .on('click', (_, i) => {
-      selectedIndex = (selectedIndex === i) ? -1 : i;
+    .on('click', function(_, i) {
+     
+      selectedIndex = selectedIndex === i ? -1 : i;
 
+      
+      const selectedYear = data[i].label;
+
+      
       svg.selectAll('path')
         .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
 
-      d3.select('.legend')
-        .selectAll('li')
+      legendContainer.selectAll('li')
         .attr('class', (_, idx) => idx === selectedIndex ? 'legend-item selected' : 'legend-item');
 
-      // ✅ NEW: Filter projects by selected year
+      
       if (selectedIndex === -1) {
-        const filtered = filterProjects(query); // live search fallback
+        const filtered = filterProjects(query);
         renderProjects(filtered, projectsContainer, 'h2');
       } else {
-        const selectedYear = data[selectedIndex].label;
-        const filtered = projects.filter(p => p.year === selectedYear && Object.values(p).join('\n').toLowerCase().includes(query.toLowerCase()));
+        const filtered = projects.filter(p =>
+          p.year === selectedYear &&
+          Object.values(p).join('\n').toLowerCase().includes(query.toLowerCase())
+        );
         renderProjects(filtered, projectsContainer, 'h2');
       }
     });
