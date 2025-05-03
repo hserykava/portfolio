@@ -10,17 +10,29 @@ if (titleSpan) {
   titleSpan.textContent = projects.length;
 }
 
-const data = projects.map(() => 1);
-const svg = d3.select('svg');
-const arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
-const pieGenerator = d3.pie();
-const arcData = pieGenerator(data);
+const data = [1, 2];
 
-const colors = d3.scaleOrdinal(d3.schemeTableau10);
+const arcGenerator = d3.arc()
+  .innerRadius(0)
+  .outerRadius(50);
 
-svg.selectAll('path')
-  .data(arcData)
-  .enter()
-  .append('path')
-  .attr('d', arcGenerator)
-  .attr('fill', (d, i) => colors(i));
+let total = data.reduce((sum, d) => sum + d, 0);
+let angle = 0;
+let arcData = [];
+
+for (let d of data) {
+  let endAngle = angle + (d / total) * 2 * Math.PI;
+  arcData.push({ startAngle: angle, endAngle: endAngle });
+  angle = endAngle;
+}
+
+const arcs = arcData.map(d => arcGenerator(d));
+
+const colors = ['gold', 'purple'];
+
+arcs.forEach((arc, idx) => {
+  d3.select('svg')
+    .append('path')
+    .attr('d', arc)
+    .attr('fill', colors[idx]);
+});
