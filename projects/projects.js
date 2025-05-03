@@ -30,7 +30,6 @@ function renderPieChart(projectsGiven) {
   const arcGen = d3.arc().innerRadius(0).outerRadius(50);
   const arcs = d3.pie().value(d => d.value)(data);
 
-  const svg = d3.select('svg');
   svg.selectAll('path').remove();
 
   svg.selectAll('path')
@@ -44,25 +43,27 @@ function renderPieChart(projectsGiven) {
     .on('click', (_, i) => {
       selectedIndex = (selectedIndex === i) ? -1 : i;
 
-     
-      const selectedYear = (selectedIndex === -1) ? null : arcs[selectedIndex].data.label;
+      svg.selectAll('path')
+        .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
 
-     
-      let visibleProjects = filterProjects(query);
-      if (selectedYear !== null) {
-        visibleProjects = visibleProjects.filter(p => p.year === selectedYear);
+      d3.select('.legend')
+        .selectAll('li')
+        .attr('class', (_, idx) => idx === selectedIndex ? 'legend-item selected' : 'legend-item');
+
+      // ✅ NEW: Filter projects by selected year
+      if (selectedIndex === -1) {
+        const filtered = filterProjects(query); // live search fallback
+        renderProjects(filtered, projectsContainer, 'h2');
+      } else {
+        const selectedYear = data[selectedIndex].label;
+        const filtered = projects.filter(p => p.year === selectedYear && Object.values(p).join('\n').toLowerCase().includes(query.toLowerCase()));
+        renderProjects(filtered, projectsContainer, 'h2');
       }
-
-      
-      renderProjects(visibleProjects, projectsContainer, 'h2');
-      renderPieChart(visibleProjects); 
     });
 
-  const legend = d3.select('.legend');
-  legend.selectAll('li').remove();
-
+  legendContainer.selectAll('li').remove();
   data.forEach((d, i) => {
-    legend.append('li')
+    legendContainer.append('li')
       .attr('class', i === selectedIndex ? 'legend-item selected' : 'legend-item')
       .attr('style', `--color:${colors(i)}`)
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
@@ -83,8 +84,18 @@ renderPieChart(projects);
 
 searchInput.addEventListener('input', (event) => {
   query = event.target.value;
-  let filtered = filterProjects(query);
+
+  let filtered;
+  if (selectedIndex === -1) {
+    filtered = filterProjects(query);
+  } else {
+    const rolledData = d3.rollups(projects, v => v.length, d => d.year);
+    const selectedYear = rolledData[selectedIndex][0];
+    filtered = projects.filter(p =>
+      p.year === selectedYear &&
+      Object.values(p).join('\n').toLowerCase().includes(query.toLowerCase())
+    );
+  }
 
   renderProjects(filtered, projectsContainer, 'h2');
-  renderPieChart(filtered);
 });
