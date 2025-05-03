@@ -176,3 +176,20 @@ body.resume article h3 {
   display: inline-block;
   border-radius: 50%;
 }
+.container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+svg {
+  max-width: 20em;
+  height: auto;
+}
+
+.legend {
+  flex: 1;
+}
