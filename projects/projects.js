@@ -8,3 +8,17 @@ const titleSpan = document.querySelector('.projects-title');
 if (titleSpan) {
   titleSpan.textContent = projects.length;
 }
+const arcGenerator = d3.arc()
+  .innerRadius(0)
+  .outerRadius(50);
+
+const arc = arcGenerator({
+  startAngle: 0,
+  endAngle: 2 * Math.PI,
+});
+
+d3.select('svg')
+  .append('path')
+  .attr('d', arc)
+  .attr('fill', 'red');
+
