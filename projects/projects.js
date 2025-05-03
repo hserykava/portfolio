@@ -2,6 +2,7 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 import { fetchJSON, renderProjects } from '../global.js';
 
 let query = '';
+let selectedIndex = -1;
 const searchInput = document.querySelector('.searchBar');
 const projects = await fetchJSON('../lib/projects.json');
 const projectsContainer = document.querySelector('.projects');
@@ -14,46 +15,52 @@ if (titleSpan) {
 }
 
 function renderPieChart(projectsGiven) {
-  
-  svg.selectAll('path').remove();
-  legendContainer.selectAll('li').remove();
-
-
-  let rolledData = d3.rollups(
+  const rolledData = d3.rollups(
     projectsGiven,
     v => v.length,
     d => d.year
   );
 
-  
-  let data = rolledData.map(([year, count]) => ({
+  const data = rolledData.map(([year, count]) => ({
     label: year,
-    value: count
+    value: count,
   }));
 
-  
-  let sliceGenerator = d3.pie().value(d => d.value);
-  let arcData = sliceGenerator(data);
-  let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
-  let colors = d3.scaleOrdinal(d3.schemeTableau10);
+  const colors = d3.scaleOrdinal(d3.schemeTableau10);
+  const arcGen = d3.arc().innerRadius(0).outerRadius(50);
+  const arcs = d3.pie().value(d => d.value)(data);
 
-  
+  const svg = d3.select('svg');
+  svg.selectAll('path').remove();
+
   svg.selectAll('path')
-    .data(arcData)
+    .data(arcs)
     .enter()
     .append('path')
-    .attr('d', arcGenerator)
-    .attr('fill', (_, i) => colors(i));
+    .attr('d', arcGen)
+    .attr('fill', (_, i) => colors(i))
+    .attr('class', (_, i) => i === selectedIndex ? 'selected' : '')
+    .on('click', (_, i) => {
+      selectedIndex = (selectedIndex === i) ? -1 : i;
 
- 
-  arcData.forEach((d, i) => {
-    legendContainer.append('li')
+      svg.selectAll('path')
+        .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
+
+      d3.select('.legend')
+        .selectAll('li')
+        .attr('class', (_, idx) => idx === selectedIndex ? 'legend-item selected' : 'legend-item');
+    });
+
+  const legend = d3.select('.legend');
+  legend.selectAll('li').remove();
+
+  data.forEach((d, i) => {
+    legend.append('li')
+      .attr('class', i === selectedIndex ? 'legend-item selected' : 'legend-item')
       .attr('style', `--color:${colors(i)}`)
-      .attr('class', 'legend-item')
-      .html(`<span class="swatch"></span> ${d.data.label} <em>(${d.data.value})</em>`);
+      .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
   });
 }
-
 
 function filterProjects(query) {
   return projects.filter(project => {
