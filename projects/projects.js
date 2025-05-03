@@ -40,15 +40,22 @@ function renderPieChart(projectsGiven) {
     .attr('d', arcGen)
     .attr('fill', (_, i) => colors(i))
     .attr('class', (_, i) => i === selectedIndex ? 'selected' : '')
+    .style('cursor', 'pointer')
     .on('click', (_, i) => {
       selectedIndex = (selectedIndex === i) ? -1 : i;
 
-      svg.selectAll('path')
-        .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
+     
+      const selectedYear = (selectedIndex === -1) ? null : arcs[selectedIndex].data.label;
 
-      d3.select('.legend')
-        .selectAll('li')
-        .attr('class', (_, idx) => idx === selectedIndex ? 'legend-item selected' : 'legend-item');
+     
+      let visibleProjects = filterProjects(query);
+      if (selectedYear !== null) {
+        visibleProjects = visibleProjects.filter(p => p.year === selectedYear);
+      }
+
+      
+      renderProjects(visibleProjects, projectsContainer, 'h2');
+      renderPieChart(visibleProjects); 
     });
 
   const legend = d3.select('.legend');
