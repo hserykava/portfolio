@@ -59,8 +59,8 @@ function renderCommitInfo(data, commits) {
   dl.append('dd').text(maxLines);
 }
 function renderScatterPlot(data, commits) {
-  const width = 1000;
-  const height = 600;
+  const width = 2000;
+  const height = 1200;
 
   const margin = { top: 10, right: 10, bottom: 30, left: 20 };
 
