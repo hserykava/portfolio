@@ -214,14 +214,14 @@ svg:has(path:hover) path:not(:hover) {
 }
 .stats {
   display: grid;
-  grid-template-columns: max-content auto;
-  gap: 0.5rem 1rem;
+  grid-template-columns: auto 1fr;
+  gap: 0.25em 1em;
 }
 
-dt {
+.stats dt {
   font-weight: bold;
 }
 
-dd {
+.stats dd {
   margin: 0;
 }
