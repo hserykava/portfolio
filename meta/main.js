@@ -46,9 +46,6 @@ function renderCommitInfo(data, commits) {
   const fileCount = d3.group(data, d => d.file).size;
   dl.append('dt').text('Files');
   dl.append('dd').text(fileCount);
-  const maxDepth = d3.max(data, d => d.depth);
-  dl.append('dt').text('Max Depth');
-  dl.append('dd').text(maxDepth);
   const maxLineLength = d3.max(data, d => d.length);
   dl.append('dt').text('Longest Line');
   dl.append('dd').text(maxLineLength);
