@@ -214,16 +214,21 @@ svg:has(path:hover) path:not(:hover) {
 }
 .stats {
   display: grid;
-  grid-template-columns: auto auto;
-  gap: 0.5rem 1rem;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 2rem;
   margin-top: 2rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .stats dt {
   font-weight: bold;
+  text-align: right;
 }
 
 .stats dd {
   margin: 0;
+  text-align: left;
 }
