@@ -212,3 +212,16 @@ path {
 svg:has(path:hover) path:not(:hover) {
   opacity: 0.5;
 }
+.stats {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 0.5rem 1rem;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0;
+}
