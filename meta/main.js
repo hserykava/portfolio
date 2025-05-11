@@ -86,6 +86,16 @@ function renderScatterPlot(data, commits) {
   const yScale = d3.scaleLinear()
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
+  
+  const gridlines = svg
+  .append('g')
+  .attr('class', 'gridLines')
+  .attr('transform', `translate(${usableArea.left}, 0)`);
+  
+  gridlines.call(
+    d3.axisLeft(yScale)
+      .tickFormat('') // no labels
+      .tickSize(-usableArea.width));
 
   const dots = svg.append('g')
     .attr('class', 'dots');
