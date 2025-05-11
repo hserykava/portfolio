@@ -43,6 +43,23 @@ function renderCommitInfo(data, commits) {
 
   dl.append('dt').text('Total commits');
   dl.append('dd').text(commits.length);
+  const fileCount = d3.group(data, d => d.file).size;
+  dl.append('dt').text('Files');
+  dl.append('dd').text(fileCount);
+  const maxDepth = d3.max(data, d => d.depth);
+  dl.append('dt').text('Max Depth');
+  dl.append('dd').text(maxDepth);
+  const maxLineLength = d3.max(data, d => d.length);
+  dl.append('dt').text('Longest Line');
+  dl.append('dd').text(maxLineLength);
+  const fileLineCounts = d3.rollups(
+    data,
+    v => v.length,
+    d => d.file
+  );
+  const maxLines = d3.max(fileLineCounts, d => d[1]);
+  dl.append('dt').text('Max Lines');
+  dl.append('dd').text(maxLines);
 }
 
 const data = await loadData();
