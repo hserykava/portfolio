@@ -214,8 +214,10 @@ svg:has(path:hover) path:not(:hover) {
 }
 .stats {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.25em 1em;
+  grid-template-columns: auto auto;
+  gap: 0.5rem 1rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
 }
 
 .stats dt {
