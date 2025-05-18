@@ -1,4 +1,12 @@
-[{
+[
+  {
+    "title": "Bikewatching",
+    "year": "2025",
+    "image": "https://hserykava.github.io/bikewatching/screenshot.png",
+    "description": "An interactive visualization of Boston bike traffic using Mapbox, D3, and BlueBikes data. Includes time filtering and direction-aware coloring.",
+    "url": "https://hserykava.github.io/bikewatching/"
+  },
+  {
     "title": "Project 1: Expository Visualization",
     "year": "2025",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
