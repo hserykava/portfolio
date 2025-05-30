@@ -125,11 +125,6 @@ const commits = processCommits(data);
 
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
-const data = await loadData();
-const commits = processCommits(data);
-
-renderCommitInfo(data, commits);
-renderScatterPlot(data, commits);
 
 let commitProgress = 100;
 
