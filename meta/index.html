@@ -5,33 +5,53 @@
   <title>Meta</title>
   <link rel="stylesheet" href="../style.css" />
   <style>
-    .stats {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.5rem 1rem;
-      background: #f8f8f8;
+    .stats-summary {
+      display: flex;
+      justify-content: space-between;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       padding: 1rem;
-      border-radius: 0.5rem;
       margin: 1rem 0;
-      font-family: sans-serif;
+      font-family: system-ui, sans-serif;
     }
-    .stats dt {
-      font-weight: bold;
-    }
-    .stats dd {
+
+    .stats-summary dl {
       margin: 0;
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 0.25rem 1rem;
+    }
+
+    .stats-summary dt {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #666;
+      margin: 0;
+    }
+
+    .stats-summary dd {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #111;
+      margin: 0;
+    }
+    .stats-summary::after {
+      content: "";
+      display: block;
+      border-bottom: 1px solid #ddd;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
   <h1>Meta</h1>
-
-  <!-- Stats moved here! -->
-  <div id="stats"></div>
+  <div id="stats" class="stats-summary"></div>
 
   <p>This page includes stats about the code of this website.</p>
 
-  <div style="display: flex; align-items: baseline;">
+  <div style="display: flex; align-items: baseline; margin-top: 1rem;">
     <label for="commit-progress" style="flex: 1;">Show commits until:</label>
     <input id="commit-progress" type="range" min="0" max="100" value="100" />
     <time id="commit-time" style="margin-left: auto;"></time>
