@@ -209,11 +209,9 @@ function updateScatterPlot(commits) {
 
 function updateFileDisplay(commits) {
   const lines = commits.flatMap(d => d.lines);
-
   const files = d3.groups(lines, d => d.file)
     .map(([name, lines]) => ({ name, lines }))
     .sort((a, b) => b.lines.length - a.lines.length);
-
   const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
   const filesContainer = d3.select('#files')
@@ -230,7 +228,6 @@ function updateFileDisplay(commits) {
 
   filesContainer.select('dt > code').text(d => d.name);
   filesContainer.select('dd').text(d => `${d.lines.length} lines`);
-
   filesContainer.select('dd')
     .selectAll('div')
     .data(d => d.lines)
@@ -238,7 +235,6 @@ function updateFileDisplay(commits) {
     .attr('class', 'loc')
     .style('background', d => colors(d.type));
 }
-
 const data = await loadData();
 const commits = processCommits(data);
 let filteredCommits = commits;
