@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Meta</title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .stats {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 1rem;
+      background: #f8f8f8;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      font-family: sans-serif;
+    }
+    .stats dt {
+      font-weight: bold;
+    }
+    .stats dd {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
   <h1>Meta</h1>
+
+  <!-- Stats moved here! -->
+  <div id="stats"></div>
+
   <p>This page includes stats about the code of this website.</p>
 
-  <div id="stats" style="display: flex; align-items: baseline;">
+  <div style="display: flex; align-items: baseline;">
     <label for="commit-progress" style="flex: 1;">Show commits until:</label>
     <input id="commit-progress" type="range" min="0" max="100" value="100" />
     <time id="commit-time" style="margin-left: auto;"></time>
   </div>
+
   <h2>Commits by time of day</h2>
   <div id="chart"></div>
+
   <script src="../global.js" type="module"></script>
   <script type="module" src="./main.js"></script>
 </body>
