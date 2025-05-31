@@ -34,7 +34,7 @@ function processCommits(data) {
 }
 
 function renderCommitInfo(data, commits) {
-  d3.select('#stats').selectAll('*').remove(); // clear old info
+  d3.select('#stats').selectAll('dl').remove();
 
   const dl = d3.select('#stats')
     .append('dl')
@@ -45,12 +45,15 @@ function renderCommitInfo(data, commits) {
 
   dl.append('dt').text('Total commits');
   dl.append('dd').text(commits.length);
+
   const fileCount = d3.group(data, d => d.file).size;
   dl.append('dt').text('Files');
   dl.append('dd').text(fileCount);
+
   const maxLineLength = d3.max(data, d => d.length);
   dl.append('dt').text('Longest Line');
   dl.append('dd').text(maxLineLength);
+
   const fileLineCounts = d3.rollups(
     data,
     v => v.length,
@@ -60,6 +63,8 @@ function renderCommitInfo(data, commits) {
   dl.append('dt').text('Max Lines');
   dl.append('dd').text(maxLines);
 }
+
+let xScale, yScale;
 
 function renderScatterPlot(data, commits) {
   const width = 2000;
@@ -124,9 +129,11 @@ function renderScatterPlot(data, commits) {
 
 function updateScatterPlot(commits) {
   const svg = d3.select('#chart svg');
+
   const xAxisGroup = svg.select('.x-axis');
   xAxisGroup.selectAll('*').remove();
   xAxisGroup.call(d3.axisBottom(xScale));
+
   const dots = svg.select('.dots')
     .selectAll('circle')
     .data(commits, d => d.id);
@@ -134,7 +141,18 @@ function updateScatterPlot(commits) {
   dots.join(
     enter => enter.append('circle')
       .attr('r', 5)
-      .attr('fill', 'steelblue'),
+      .attr('fill', 'steelblue')
+      .on('mouseenter', (event, commit) => {
+        renderTooltipContent(commit);
+        updateTooltipVisibility(true);
+        updateTooltipPosition(event);
+      })
+      .on('mousemove', (event) => {
+        updateTooltipPosition(event);
+      })
+      .on('mouseleave', () => {
+        updateTooltipVisibility(false);
+      }),
     update => update,
     exit => exit.remove()
   )
@@ -144,17 +162,17 @@ function updateScatterPlot(commits) {
 
 const data = await loadData();
 const commits = processCommits(data);
-
 let filteredCommits = commits;
 
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
 
 let commitProgress = 100;
+
 let timeScale = d3.scaleTime()
   .domain([
-    d3.min(commits, d => d.datetime),
-    d3.max(commits, d => d.datetime),
+    d3.min(commits, (d) => d.datetime),
+    d3.max(commits, (d) => d.datetime),
   ])
   .range([0, 100]);
 
@@ -168,7 +186,8 @@ function onTimeSliderChange() {
     timeStyle: "short",
   });
 
-  filteredCommits = commits.filter(d => d.datetime <= commitMaxTime);
+  
+  filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
   updateScatterPlot(filteredCommits);
   renderCommitInfo(data, filteredCommits);
 }
