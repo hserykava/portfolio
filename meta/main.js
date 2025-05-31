@@ -104,6 +104,25 @@ function renderScatterPlot(data, commits) {
     .attr('class', 'y-axis')
     .call(d3.axisLeft(yScale)
       .tickFormat(d => String(d % 24).padStart(2, '0') + ':00'));
+
+  
+  svg.append('text')
+    .attr('class', 'x-axis-label')
+    .attr('x', usableArea.left + usableArea.width / 2)
+    .attr('y', height - 5)
+    .attr('text-anchor', 'middle')
+    .attr('fill', 'black')
+    .text('Date');
+
+  svg.append('text')
+    .attr('class', 'y-axis-label')
+    .attr('transform', `rotate(-90)`)
+    .attr('x', - (usableArea.top + usableArea.height / 2))
+    .attr('y', 5)
+    .attr('text-anchor', 'middle')
+    .attr('fill', 'black')
+    .text('Hour of Day');
+
   const [minLines, maxLines] = d3.extent(commits, d => d.totalLines);
   const rScale = d3.scaleSqrt()
     .domain([minLines, maxLines])
@@ -113,7 +132,7 @@ function renderScatterPlot(data, commits) {
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
-    .data(sortedCommits)
+    .data(sortedCommits, d => d.id)
     .join('circle')
     .attr('cx', d => xScale(d.datetime))
     .attr('cy', d => yScale(d.hourFrac))
@@ -133,6 +152,7 @@ function renderScatterPlot(data, commits) {
       d3.select(event.currentTarget).style('fill-opacity', 0.7);
       updateTooltipVisibility(false);
     });
+
   const gridLines = svg.append('g')
     .attr('class', 'grid-lines')
     .attr('transform', `translate(${usableArea.left}, 0)`);
@@ -202,7 +222,6 @@ function onTimeSliderChange() {
     timeStyle: "short",
   });
 
-  
   filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
   updateScatterPlot(filteredCommits);
   renderCommitInfo(data, filteredCommits);
