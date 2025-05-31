@@ -169,6 +169,10 @@ function updateScatterPlot(commits) {
   const xAxisGroup = svg.select('.x-axis');
   xAxisGroup.selectAll('*').remove();
   xAxisGroup.call(d3.axisBottom(xScale));
+  const [minLines, maxLines] = d3.extent(commits, d => d.totalLines);
+  const rScale = d3.scaleSqrt()
+    .domain([minLines, maxLines])
+    .range([2, 30]);
 
   const dots = svg.select('.dots')
     .selectAll('circle')
@@ -194,8 +198,11 @@ function updateScatterPlot(commits) {
       })
       .transition()
       .duration(500)
-      .attr('r', d => 5),
-    update => update,
+      .attr('r', d => rScale(d.totalLines)),
+    update => update
+      .transition()
+      .duration(500)
+      .attr('r', d => rScale(d.totalLines)),
     exit => exit.remove()
   )
     .attr('cx', d => xScale(d.datetime))
