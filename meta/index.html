@@ -159,6 +159,17 @@
     <time id="commit-time" style="margin-left: auto;"></time>
   </div>
 
+  <div id="stats" class="stats-summary"></div>
+
+  <h2>Commits by time of day</h2>
+  <div id="chart"></div>
+
+  <dl id="commit-tooltip" class="info tooltip" hidden>
+    <dt>Commit</dt>
+    <dd><a href="" id="commit-link" target="_blank"></a></dd>
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
+  </dl>
   <dl id="files">
     <!-- Example structure for each file:
     <div>
@@ -171,19 +182,6 @@
     </div>
     -->
   </dl>
-
-  <div id="stats" class="stats-summary"></div>
-
-  <h2>Commits by time of day</h2>
-  <div id="chart"></div>
-
-  <dl id="commit-tooltip" class="info tooltip" hidden>
-    <dt>Commit</dt>
-    <dd><a href="" id="commit-link" target="_blank"></a></dd>
-    <dt>Date</dt>
-    <dd id="commit-date"></dd>
-  </dl>
-
   <script src="../global.js" type="module"></script>
   <script type="module" src="./main.js"></script>
 </body>
