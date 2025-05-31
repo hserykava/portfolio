@@ -225,6 +225,24 @@ function updateFileDisplay(commits) {
 
   filesContainer.select('dt > code').text(d => d.name);
   filesContainer.select('dd').text(d => `${d.lines.length} lines`);
+  filesContainer.selectAll('dd').on('mouseenter', (event, d) => {
+    const fileCircles = d3.select('#chart').selectAll('circle')
+      .filter(commit => commit.lines.some(line => line.file === d.name));
+
+    fileCircles.style('stroke', 'black')
+      .style('stroke-width', 2);
+
+    d3.select(event.currentTarget)
+      .style('background-color', '#eef');
+  })
+  .on('mouseleave', (event, d) => {
+    d3.select('#chart').selectAll('circle')
+      .style('stroke', null)
+      .style('stroke-width', null);
+
+    d3.select(event.currentTarget)
+      .style('background-color', null);
+  });
 }
 
 const data = await loadData();
