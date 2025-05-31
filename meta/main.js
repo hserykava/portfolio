@@ -165,6 +165,7 @@ function renderScatterPlot(data, commits) {
 
 function updateScatterPlot(commits) {
   const svg = d3.select('#chart svg');
+  xScale.domain(d3.extent(commits, d => d.datetime)).nice();
 
   const xAxisGroup = svg.select('.x-axis');
   xAxisGroup.selectAll('*').remove();
