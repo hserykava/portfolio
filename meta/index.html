@@ -146,6 +146,25 @@
       padding-top: 0.6em;
       margin-left: 0;
     }
+
+    #scrolly-1 {
+      position: relative;
+      display: flex;
+      gap: 1rem;
+    }
+    #scrolly-1 > * {
+      flex: 1;
+    }
+    #scatter-story {
+      position: relative;
+    }
+    #scatter-plot {
+      position: sticky;
+      top: 0;
+      left: 0;
+      bottom: auto;
+      height: 50vh;
+    }
   </style>
 </head>
 <body>
@@ -161,15 +180,15 @@
 
   <div id="stats" class="stats-summary"></div>
 
-  <h2>Commits by time of day</h2>
-  <div id="chart"></div>
+  <div id="scrolly-1">
+    <div id="scatter-story">
+      <p>some filler text here</p>
+    </div>
+    <div id="scatter-plot">
+      <div id="chart"></div>
+    </div>
+  </div>
 
-  <dl id="commit-tooltip" class="info tooltip" hidden>
-    <dt>Commit</dt>
-    <dd><a href="" id="commit-link" target="_blank"></a></dd>
-    <dt>Date</dt>
-    <dd id="commit-date"></dd>
-  </dl>
   <dl id="files">
     <!-- Example structure for each file:
     <div>
@@ -182,6 +201,14 @@
     </div>
     -->
   </dl>
+
+  <dl id="commit-tooltip" class="info tooltip" hidden>
+    <dt>Commit</dt>
+    <dd><a href="" id="commit-link" target="_blank"></a></dd>
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
+  </dl>
+
   <script src="../global.js" type="module"></script>
   <script type="module" src="./main.js"></script>
 </body>
