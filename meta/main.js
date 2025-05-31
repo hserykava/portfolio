@@ -101,12 +101,19 @@ function renderScatterPlot(data, commits) {
     .attr('class', 'dots');
 
   dots.selectAll('circle')
-    .data(commits)
-    .join('circle')
-    .attr('cx', d => xScale(d.datetime))
-    .attr('cy', d => yScale(d.hourFrac))
-    .attr('r', 5)
-    .attr('fill', 'steelblue');
+  .data(commits)
+  .join('circle')
+  .attr('cx', d => xScale(d.datetime))
+  .attr('cy', d => yScale(d.hourFrac))
+  .attr('r', 5)
+  .attr('fill', 'steelblue')
+  .on('mouseenter', (event, d) => {
+    renderTooltipContent(d);
+    updateTooltipVisibility(true);
+  })
+  .on('mouseleave', () => {
+    updateTooltipVisibility(false);
+  });
 
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3.axisLeft(yScale)
@@ -159,4 +166,9 @@ function renderTooltipContent(commit) {
   date.textContent = commit.datetime.toLocaleString('en', {
     dateStyle: 'full',
   });
+}
+
+function updateTooltipVisibility(isVisible) {
+  const tooltip = document.getElementById('commit-tooltip');
+  tooltip.hidden = !isVisible;
 }
