@@ -65,9 +65,9 @@ function renderCommitInfo(data, commits) {
 }
 
 function renderScatterPlot(data, commits) {
-  const width = 2000;
-  const height = 1200;
-  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+  const width = 960;
+  const height = 500;
+  const margin = { top: 10, right: 10, bottom: 30, left: 40 };
 
   const usableArea = {
     top: margin.top,
@@ -92,8 +92,9 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
+  const maxLines = d3.max(commits, d => d.totalLines) || 1;
   sizeScale = d3.scaleSqrt()
-    .domain([0, d3.max(commits, d => d.totalLines)])
+    .domain([0, maxLines])
     .range([2, 20]);
 
   svg.append('g')
