@@ -44,7 +44,7 @@
       border-bottom: 1px solid #ddd;
       margin-top: 0.5rem;
     }
-    
+
     dl.info {
       display: grid;
       grid-template-columns: auto 1fr;
@@ -70,8 +70,6 @@
 
     .tooltip {
       position: fixed;
-      top: 1em;
-      left: 1em;
       z-index: 1000;
     }
 
@@ -83,6 +81,7 @@
 </head>
 <body>
   <h1>Meta</h1>
+
   <div id="stats" class="stats-summary"></div>
 
   <p>This page includes stats about the code of this website.</p>
@@ -95,6 +94,7 @@
 
   <h2>Commits by time of day</h2>
   <div id="chart"></div>
+  
   <dl id="commit-tooltip" class="info tooltip" hidden>
     <dt>Commit</dt>
     <dd><a href="" id="commit-link" target="_blank"></a></dd>
