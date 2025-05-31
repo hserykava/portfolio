@@ -34,7 +34,7 @@ function processCommits(data) {
 }
 
 function renderCommitInfo(data, commits) {
-  d3.select('#stats').selectAll('*').remove(); // clear old info
+  d3.select('#stats').selectAll('*').remove();
 
   const dl = d3.select('#stats')
     .append('dl')
@@ -45,12 +45,15 @@ function renderCommitInfo(data, commits) {
 
   dl.append('dt').text('Total commits');
   dl.append('dd').text(commits.length);
+
   const fileCount = d3.group(data, d => d.file).size;
   dl.append('dt').text('Files');
   dl.append('dd').text(fileCount);
+
   const maxLineLength = d3.max(data, d => d.length);
   dl.append('dt').text('Longest Line');
   dl.append('dd').text(maxLineLength);
+
   const fileLineCounts = d3.rollups(
     data,
     v => v.length,
@@ -89,6 +92,10 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
+  sizeScale = d3.scaleSqrt()
+    .domain([0, d3.max(commits, d => d.totalLines)])
+    .range([2, 20]);
+
   svg.append('g')
     .attr('transform', `translate(0, ${usableArea.bottom})`)
     .attr('class', 'x-axis')
@@ -103,11 +110,11 @@ function renderScatterPlot(data, commits) {
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
-    .data(commits)
+    .data(commits, d => d.id)
     .join('circle')
     .attr('cx', d => xScale(d.datetime))
     .attr('cy', d => yScale(d.hourFrac))
-    .attr('r', 5)
+    .attr('r', d => sizeScale(d.totalLines))
     .attr('fill', 'steelblue')
     .on('mouseenter', (event, commit) => {
       renderTooltipContent(commit);
@@ -127,19 +134,22 @@ function updateScatterPlot(commits) {
   const xAxisGroup = svg.select('.x-axis');
   xAxisGroup.selectAll('*').remove();
   xAxisGroup.call(d3.axisBottom(xScale));
+
+  sizeScale.domain([0, d3.max(commits, d => d.totalLines)]);
+
   const dots = svg.select('.dots')
     .selectAll('circle')
     .data(commits, d => d.id);
 
   dots.join(
     enter => enter.append('circle')
-      .attr('r', 5)
       .attr('fill', 'steelblue'),
     update => update,
     exit => exit.remove()
   )
     .attr('cx', d => xScale(d.datetime))
-    .attr('cy', d => yScale(d.hourFrac));
+    .attr('cy', d => yScale(d.hourFrac))
+    .attr('r', d => sizeScale(d.totalLines));
 }
 
 const data = await loadData();
