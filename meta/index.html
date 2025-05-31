@@ -43,6 +43,34 @@
       border-bottom: 1px solid #ddd;
       margin-top: 0.5rem;
     }
+    dl.info {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.25rem 1rem;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      font-family: sans-serif;
+    }
+
+  dl.info dt {
+    font-weight: bold;
+    margin: 0;
+  }
+
+  dl.info dd {
+    margin: 0;
+  }
+  .tooltip {
+    position: fixed;
+    top: 1em;
+    left: 1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    display: none; /* Hidden initially */
+    z-index: 1000;
+    background: #fff;
+  }
   </style>
 </head>
 <body>
@@ -59,7 +87,14 @@
 
   <h2>Commits by time of day</h2>
   <div id="chart"></div>
-
+  <dl id="commit-tooltip" class="info tooltip">
+    <dt>Commit</dt>
+    <dd>
+      <a href="" id="commit-link" target="_blank"></a>
+    </dd>
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
+  </dl>
   <script src="../global.js" type="module"></script>
   <script type="module" src="./main.js"></script>
 </body>
