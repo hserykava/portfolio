@@ -31,7 +31,8 @@ function processCommits(data) {
       };
       Object.defineProperty(ret, 'lines', { value: lines, enumerable: false });
       return ret;
-    });
+    })
+    .sort((a, b) => a.datetime - b.datetime);
 }
 
 function renderCommitInfo(lines, commits) {
