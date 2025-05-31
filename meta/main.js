@@ -321,7 +321,14 @@ d3.select('#scatter-story')
 	`,
   );
 function onStepEnter(response) {
-  console.log(response.element.__data__.datetime);
+  const datetime = response.element.__data__.datetime;
+
+  filteredCommits = commits.filter(d => d.datetime <= datetime);
+  const filteredLines = filteredCommits.flatMap(d => d.lines);
+
+  updateScatterPlot(filteredCommits);
+  renderCommitInfo(filteredLines, filteredCommits);
+  updateFileDisplay(filteredCommits);
 }
 
 const scroller = scrollama();
