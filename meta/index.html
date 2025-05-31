@@ -146,24 +146,6 @@
       padding-top: 0.6em;
       margin-left: 0;
     }
-    #scrolly-1 {
-      position: relative;
-      display: flex;
-      gap: 1rem;
-    }
-    #scrolly-1 > * {
-      flex: 1;
-    }
-    #scatter-story {
-      position: relative;
-    }
-    #scatter-plot {
-      position: sticky;
-      top: 0;
-      left: 0;
-      bottom: auto;
-      height: 50vh;
-    }
   </style>
 </head>
 <body>
@@ -176,19 +158,24 @@
     <input id="commit-progress" type="range" min="0" max="100" value="100" />
     <time id="commit-time" style="margin-left: auto;"></time>
   </div>
-  <div id="scrolly-1">
-    <div id="scatter-story">
-      some filler text here
-    </div>
 
-    <div id="scatter-plot">
-      <div id="chart"></div>
+  <dl id="files">
+    <!-- Example structure for each file:
+    <div>
+      <dt><code>src/lib/index.js</code></dt>
+      <dd>
+        <div class="loc"></div>
+        <div class="loc"></div>
+        ...
+      </dd>
     </div>
-  </div>
- 
-  <dl id="files"></dl>
+    -->
+  </dl>
 
   <div id="stats" class="stats-summary"></div>
+
+  <h2>Commits by time of day</h2>
+  <div id="chart"></div>
 
   <dl id="commit-tooltip" class="info tooltip" hidden>
     <dt>Commit</dt>
