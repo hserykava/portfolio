@@ -104,26 +104,24 @@ function renderScatterPlot(data, commits) {
     .attr('class', 'y-axis')
     .call(d3.axisLeft(yScale)
       .tickFormat(d => String(d % 24).padStart(2, '0') + ':00'));
-  const gridLines = svg.append('g')
-  .attr('class', 'grid-lines')
-  .attr('transform', `translate(${usableArea.left}, 0)`);
-
-  gridLines.call(
-    d3.axisLeft(yScale)
-      .tickSize(-usableArea.width)
-      .tickFormat('')
-  );
+  const [minLines, maxLines] = d3.extent(commits, d => d.totalLines);
+  const rScale = d3.scaleSqrt()
+    .domain([minLines, maxLines])
+    .range([2, 30]);
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
-    .data(commits)
+    .data(sortedCommits)
     .join('circle')
     .attr('cx', d => xScale(d.datetime))
     .attr('cy', d => yScale(d.hourFrac))
-    .attr('r', 5)
-    .attr('fill', 'steelblue')
+    .attr('r', d => rScale(d.totalLines))
+    .style('fill', 'steelblue')
+    .style('fill-opacity', 0.7)
     .on('mouseenter', (event, commit) => {
+      d3.select(event.currentTarget).style('fill-opacity', 1);
       renderTooltipContent(commit);
       updateTooltipVisibility(true);
       updateTooltipPosition(event);
@@ -131,9 +129,18 @@ function renderScatterPlot(data, commits) {
     .on('mousemove', (event) => {
       updateTooltipPosition(event);
     })
-    .on('mouseleave', () => {
+    .on('mouseleave', (event) => {
+      d3.select(event.currentTarget).style('fill-opacity', 0.7);
       updateTooltipVisibility(false);
     });
+  const gridLines = svg.append('g')
+    .attr('class', 'grid-lines')
+    .attr('transform', `translate(${usableArea.left}, 0)`);
+  gridLines.call(
+    d3.axisLeft(yScale)
+      .tickSize(-usableArea.width)
+      .tickFormat('')
+  );
 }
 
 function updateScatterPlot(commits) {
