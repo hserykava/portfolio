@@ -33,7 +33,7 @@ function processCommits(data) {
     });
 }
 
-function renderCommitInfo(filteredData, filteredCommits) {
+function renderCommitInfo(data, commits) {
   d3.select('#stats').selectAll('dl').remove();
 
   const dl = d3.select('#stats')
