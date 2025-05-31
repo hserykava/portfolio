@@ -34,7 +34,7 @@ function processCommits(data) {
 }
 
 function renderCommitInfo(data, commits) {
-  d3.select('#stats').selectAll('*').remove();
+  d3.select('#stats').selectAll('*').remove(); // clear old info
 
   const dl = d3.select('#stats')
     .append('dl')
@@ -45,15 +45,12 @@ function renderCommitInfo(data, commits) {
 
   dl.append('dt').text('Total commits');
   dl.append('dd').text(commits.length);
-
   const fileCount = d3.group(data, d => d.file).size;
   dl.append('dt').text('Files');
   dl.append('dd').text(fileCount);
-
   const maxLineLength = d3.max(data, d => d.length);
   dl.append('dt').text('Longest Line');
   dl.append('dd').text(maxLineLength);
-
   const fileLineCounts = d3.rollups(
     data,
     v => v.length,
@@ -65,9 +62,9 @@ function renderCommitInfo(data, commits) {
 }
 
 function renderScatterPlot(data, commits) {
-  const width = 960;
-  const height = 500;
-  const margin = { top: 10, right: 10, bottom: 30, left: 40 };
+  const width = 2000;
+  const height = 1200;
+  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
 
   const usableArea = {
     top: margin.top,
@@ -92,11 +89,6 @@ function renderScatterPlot(data, commits) {
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
 
-  const maxLines = d3.max(commits, d => d.totalLines) || 1;
-  sizeScale = d3.scaleSqrt()
-    .domain([0, maxLines])
-    .range([2, 20]);
-
   svg.append('g')
     .attr('transform', `translate(0, ${usableArea.bottom})`)
     .attr('class', 'x-axis')
@@ -111,11 +103,11 @@ function renderScatterPlot(data, commits) {
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
-    .data(commits, d => d.id)
+    .data(commits)
     .join('circle')
     .attr('cx', d => xScale(d.datetime))
     .attr('cy', d => yScale(d.hourFrac))
-    .attr('r', d => sizeScale(d.totalLines))
+    .attr('r', 5)
     .attr('fill', 'steelblue')
     .on('mouseenter', (event, commit) => {
       renderTooltipContent(commit);
@@ -135,22 +127,19 @@ function updateScatterPlot(commits) {
   const xAxisGroup = svg.select('.x-axis');
   xAxisGroup.selectAll('*').remove();
   xAxisGroup.call(d3.axisBottom(xScale));
-
-  sizeScale.domain([0, d3.max(commits, d => d.totalLines)]);
-
   const dots = svg.select('.dots')
     .selectAll('circle')
     .data(commits, d => d.id);
 
   dots.join(
     enter => enter.append('circle')
+      .attr('r', 5)
       .attr('fill', 'steelblue'),
     update => update,
     exit => exit.remove()
   )
     .attr('cx', d => xScale(d.datetime))
-    .attr('cy', d => yScale(d.hourFrac))
-    .attr('r', d => sizeScale(d.totalLines));
+    .attr('cy', d => yScale(d.hourFrac));
 }
 
 const data = await loadData();
