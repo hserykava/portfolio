@@ -104,6 +104,15 @@ function renderScatterPlot(data, commits) {
     .attr('class', 'y-axis')
     .call(d3.axisLeft(yScale)
       .tickFormat(d => String(d % 24).padStart(2, '0') + ':00'));
+  const gridLines = svg.append('g')
+  .attr('class', 'grid-lines')
+  .attr('transform', `translate(${usableArea.left}, 0)`);
+
+  gridLines.call(
+    d3.axisLeft(yScale)
+      .tickSize(-usableArea.width)
+      .tickFormat('')
+  );
 
   svg.append('g')
     .attr('class', 'dots')
