@@ -176,9 +176,11 @@ function updateScatterPlot(commits) {
 
   dots.join(
     enter => enter.append('circle')
-      .attr('r', 5)
+      .attr('r', 0)
       .attr('fill', 'steelblue')
+      .style('fill-opacity', 0.7)
       .on('mouseenter', (event, commit) => {
+        d3.select(event.currentTarget).style('fill-opacity', 1);
         renderTooltipContent(commit);
         updateTooltipVisibility(true);
         updateTooltipPosition(event);
@@ -187,15 +189,18 @@ function updateScatterPlot(commits) {
         updateTooltipPosition(event);
       })
       .on('mouseleave', () => {
+        d3.select(event.currentTarget).style('fill-opacity', 0.7);
         updateTooltipVisibility(false);
-      }),
+      })
+      .transition()
+      .duration(500)
+      .attr('r', d => 5),
     update => update,
     exit => exit.remove()
   )
     .attr('cx', d => xScale(d.datetime))
     .attr('cy', d => yScale(d.hourFrac));
 }
-
 const data = await loadData();
 const commits = processCommits(data);
 let filteredCommits = commits;
